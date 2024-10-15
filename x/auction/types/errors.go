@@ -8,5 +8,6 @@ import (
 
 // x/auction module sentinel errors
 var (
-	ErrSample = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrZeroStartingAuctionPrice = sdkerrors.Register(ModuleName, 1101, "Auction starting price cannot be zero")
+	ErrZeroAuctionBlockDuration = sdkerrors.Register(ModuleName, 1102, "Auction duration height cannot be zero")
 )

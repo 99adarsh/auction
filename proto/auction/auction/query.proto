@@ -1,26 +1,58 @@
 syntax = "proto3";
+
 package auction.auction;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "auction/auction/params.proto";
+import "auction/auction/auction_info.proto";
 
 option go_package = "auction/x/auction/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/auction/auction/params";
+  
+  }
+  
+  // Queries a list of AuctionInfo items.
+  rpc AuctionInfo    (QueryGetAuctionInfoRequest) returns (QueryGetAuctionInfoResponse) {
+    option (google.api.http).get = "/auction/auction/auction_info/{auctionId}";
+  
+  }
+  rpc AuctionInfoAll (QueryAllAuctionInfoRequest) returns (QueryAllAuctionInfoResponse) {
+    option (google.api.http).get = "/auction/auction/auction_info";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetAuctionInfoRequest {
+  string auctionId = 1;
+}
+
+message QueryGetAuctionInfoResponse {
+  AuctionInfo auctionInfo = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllAuctionInfoRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllAuctionInfoResponse {
+  repeated AuctionInfo                            auctionInfo = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+

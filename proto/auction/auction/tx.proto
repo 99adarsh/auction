@@ -1,7 +1,21 @@
 syntax = "proto3";
+
 package auction.auction;
 
 option go_package = "auction/x/auction/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc CreateAuction (MsgCreateAuction) returns (MsgCreateAuctionResponse);
+}
+message MsgCreateAuction {
+  string creator        = 1;
+  string itemName       = 2;
+  uint64 startingPrice  = 3;
+  uint64 durationBlocks = 4;
+}
+
+message MsgCreateAuctionResponse {
+  string auctionId = 1;
+}
+

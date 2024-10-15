@@ -1,0 +1,15 @@
+syntax = "proto3";
+package auction.auction;
+
+option go_package = "auction/x/auction/types";
+
+message AuctionInfo {
+  string auctionId = 1; 
+  string itemName = 2; 
+  uint64 startingPrice = 3; 
+  uint64 auctionEndHeight = 4; 
+  uint64 currentHighestBid = 5; 
+  string currentHighestBidder = 6; 
+  
+}
+
