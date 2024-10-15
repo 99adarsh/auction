@@ -1,0 +1,11 @@
+syntax = "proto3";
+package auction.auction;
+
+option go_package = "auction/x/auction/types";
+
+message ActiveAuctionsList {
+  uint64 id = 1;
+  string auctionId = 2; 
+  int64 auctionEndHeight = 3; 
+  
+}

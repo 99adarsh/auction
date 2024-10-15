@@ -22,11 +22,12 @@ func (k msgServer) CreateAuction(goCtx context.Context, msg *types.MsgCreateAuct
 	}
 
 	auctionEndHeight := ctx.BlockHeight() + int64(msg.DurationBlocks)
-	// create the auction info and save it in the memory
-	// create new auction id, check for existing auction against that id
-	// TODO: Create more appropriate id
+	// TODO: Create more appropriate and random id
 	newAuctionId := msg.ItemName + strconv.Itoa(int(ctx.BlockHeight()))
-	// TODO: verify if their is any other auction store against newAuctionId
+	_, alreadyAvailableAuction := k.Keeper.GetAuctionInfo(ctx, newAuctionId)
+	if alreadyAvailableAuction {
+		return nil, types.ErrNewAuctionIdAlreadyExists
+	}
 
 	// Initially, bidder is empty string and the bid amount is 0
 	newAuctionInfo := types.AuctionInfo{
@@ -38,7 +39,13 @@ func (k msgServer) CreateAuction(goCtx context.Context, msg *types.MsgCreateAuct
 		CurrentHighestBidder: "",
 	}
 
+	newActiveAuction := types.ActiveAuctionsList{
+		AuctionId:        newAuctionId,
+		AuctionEndHeight: auctionEndHeight,
+	}
+
 	k.Keeper.SetAuctionInfo(ctx, newAuctionInfo)
+	_ = k.Keeper.AppendActiveAuctionsList(ctx, newActiveAuction)
 
 	return &types.MsgCreateAuctionResponse{}, nil
 }

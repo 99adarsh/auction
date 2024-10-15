@@ -7,6 +7,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "auction/auction/params.proto";
 import "auction/auction/auction_info.proto";
+import "auction/auction/active_auctions_list.proto";
 
 option go_package = "auction/x/auction/types";
 
@@ -26,6 +27,16 @@ service Query {
   }
   rpc AuctionInfoAll (QueryAllAuctionInfoRequest) returns (QueryAllAuctionInfoResponse) {
     option (google.api.http).get = "/auction/auction/auction_info";
+  
+  }
+  
+  // Queries a list of ActiveAuctionsList items.
+  rpc ActiveAuctionsList    (QueryGetActiveAuctionsListRequest) returns (QueryGetActiveAuctionsListResponse) {
+    option (google.api.http).get = "/auction/auction/active_auctions_list/{id}";
+  
+  }
+  rpc ActiveAuctionsListAll (QueryAllActiveAuctionsListRequest) returns (QueryAllActiveAuctionsListResponse) {
+    option (google.api.http).get = "/auction/auction/active_auctions_list";
   
   }
 }
@@ -54,5 +65,22 @@ message QueryAllAuctionInfoRequest {
 message QueryAllAuctionInfoResponse {
   repeated AuctionInfo                            auctionInfo = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+
+message QueryGetActiveAuctionsListRequest {
+  uint64 id = 1;
+}
+
+message QueryGetActiveAuctionsListResponse {
+  ActiveAuctionsList ActiveAuctionsList = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllActiveAuctionsListRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllActiveAuctionsListResponse {
+  repeated ActiveAuctionsList                     ActiveAuctionsList = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination         = 2;
 }
 

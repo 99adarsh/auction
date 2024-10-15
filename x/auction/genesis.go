@@ -12,6 +12,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.AuctionInfoList {
 		k.SetAuctionInfo(ctx, elem)
 	}
+	// Set all the activeAuctionsList
+	for _, elem := range genState.ActiveAuctionsListList {
+		k.SetActiveAuctionsList(ctx, elem)
+	}
+
+	// Set activeAuctionsList count
+	k.SetActiveAuctionsListCount(ctx, genState.ActiveAuctionsListCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -22,6 +29,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.Params = k.GetParams(ctx)
 
 	genesis.AuctionInfoList = k.GetAllAuctionInfo(ctx)
+	genesis.ActiveAuctionsListList = k.GetAllActiveAuctionsList(ctx)
+	genesis.ActiveAuctionsListCount = k.GetActiveAuctionsListCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis
