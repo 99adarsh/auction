@@ -7,6 +7,7 @@ option go_package = "auction/x/auction/types";
 // Msg defines the Msg service.
 service Msg {
   rpc CreateAuction (MsgCreateAuction) returns (MsgCreateAuctionResponse);
+  rpc PlaceBid      (MsgPlaceBid     ) returns (MsgPlaceBidResponse     );
 }
 message MsgCreateAuction {
   string creator        = 1;
@@ -18,4 +19,12 @@ message MsgCreateAuction {
 message MsgCreateAuctionResponse {
   string auctionId = 1;
 }
+
+message MsgPlaceBid {
+  string bidder   = 1;
+  string auctionId = 2;
+  uint64 bidAmount = 3;
+}
+
+message MsgPlaceBidResponse {}
 

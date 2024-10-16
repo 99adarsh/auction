@@ -24,8 +24,8 @@ paths:
                     auctionId:
                       type: string
                     auctionEndHeight:
-                      type: integer
-                      format: int32
+                      type: string
+                      format: int64
               pagination:
                 type: object
                 properties:
@@ -150,8 +150,8 @@ paths:
                   auctionId:
                     type: string
                   auctionEndHeight:
-                    type: integer
-                    format: int32
+                    type: string
+                    format: int64
         default:
           description: An unexpected error response.
           schema:
@@ -46844,8 +46844,8 @@ definitions:
       auctionId:
         type: string
       auctionEndHeight:
-        type: integer
-        format: int32
+        type: string
+        format: int64
   auction.auction.AuctionInfo:
     type: object
     properties:
@@ -46869,6 +46869,8 @@ definitions:
     properties:
       auctionId:
         type: string
+  auction.auction.MsgPlaceBidResponse:
+    type: object
   auction.auction.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -46886,8 +46888,8 @@ definitions:
             auctionId:
               type: string
             auctionEndHeight:
-              type: integer
-              format: int32
+              type: string
+              format: int64
       pagination:
         type: object
         properties:
@@ -46975,8 +46977,8 @@ definitions:
           auctionId:
             type: string
           auctionEndHeight:
-            type: integer
-            format: int32
+            type: string
+            format: int64
   auction.auction.QueryGetAuctionInfoResponse:
     type: object
     properties:
