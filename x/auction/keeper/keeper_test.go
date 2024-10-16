@@ -39,14 +39,13 @@ type KeeperTestSuite struct {
 var auctionModuleAddress string
 
 func (suite *KeeperTestSuite) SetupTest() {
-	// app := simapp.InitSideTestApp(initChain)
 	app := simapp.Setup(suite.T())
 	ctx := app.BaseApp.NewContext(false, tmproto.Header{Time: time.Now().UTC()})
 
 	app.AccountKeeper.SetParams(ctx, authtypes.DefaultParams())
 	app.BankKeeper.SetParams(ctx, banktypes.DefaultParams())
-	stakingParams := stakingtypes.DefaultParams()
-	stakingParams.MinCommissionRate = sdk.OneDec()
+	// stakingParams := stakingtypes.DefaultParams()
+	// stakingParams.MinCommissionRate = sdk.OneDec()
 	app.StakingKeeper.SetParams(ctx, stakingtypes.DefaultParams())
 
 	auctionModuleAddress = app.AccountKeeper.GetModuleAddress(types.ModuleName).String()
