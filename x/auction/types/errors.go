@@ -13,4 +13,5 @@ var (
 	ErrNewAuctionIdAlreadyExists  = sdkerrors.Register(ModuleName, 1103, "This AuctionId already exists")
 	ErrAuctionInfoNotFound        = sdkerrors.Register(ModuleName, 1104, "AuctionInfo does not exist this auction id")
 	ErrAuctionBiddingAlreadyEnded = sdkerrors.Register(ModuleName, 1105, "Auction bidding already ended for this auction id")
+	ErrAuctionBidIsLesser         = sdkerrors.Register(ModuleName, 1106, "Current Auction bid is lesser than the last bid or is lower that the minimum starting price")
 )
