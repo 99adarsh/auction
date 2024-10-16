@@ -22,11 +22,12 @@ func (k msgServer) PlaceBid(goCtx context.Context, msg *types.MsgPlaceBid) (*typ
 	}
 
 	// Bid Validity check
-	if msg.BidAmount >= auction_info.StartingPrice && msg.BidAmount > auction_info.CurrentHighestBid {
-		auction_info.CurrentHighestBid = msg.BidAmount
-		auction_info.CurrentHighestBidder = msg.Bidder
-		k.Keeper.SetAuctionInfo(ctx, auction_info)
+	if msg.BidAmount <= auction_info.StartingPrice || msg.BidAmount <= auction_info.CurrentHighestBid {
+		return nil, types.ErrAuctionBidIsLesser
 	}
 
+	auction_info.CurrentHighestBid = msg.BidAmount
+	auction_info.CurrentHighestBidder = msg.Bidder
+	k.Keeper.SetAuctionInfo(ctx, auction_info)
 	return &types.MsgPlaceBidResponse{}, nil
 }

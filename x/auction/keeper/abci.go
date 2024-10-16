@@ -1,13 +1,11 @@
-package auction
+package keeper
 
 import (
-	"auction/x/auction/keeper"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 // Finalize the active auctions by removing it from the ActiveAuctionList
-func EndBlock(ctx sdk.Context, k keeper.Keeper) error {
+func (k Keeper) EndBlock(ctx sdk.Context) error {
 	all_active_auction_list := k.GetAllActiveAuctionsList(ctx)
 
 	for _, auction := range all_active_auction_list {
